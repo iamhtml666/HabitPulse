@@ -5,7 +5,7 @@ import { saveHabit, getHabits, addLog, getLogs, deleteHabit, getAllLogs } from '
 import { HabitCard } from './components/HabitCard';
 import { HabitDetail } from './components/HabitDetail';
 import { NewHabitModal } from './components/NewHabitModal';
-import { HomeIcon, ChartIcon, CogIcon, PlusIcon } from './components/Icon';
+import { HomeIcon, CogIcon, PlusIcon } from './components/Icon';
 
 const AppContent = () => {
   const [habits, setHabits] = useState<Habit[]>([]);
@@ -14,7 +14,7 @@ const AppContent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedHabitId, setSelectedHabitId] = useState<string | null>(null);
   
-  // Tabs: 'home' | 'stats' | 'settings'
+  // Tabs: 'home' | 'settings'
   const [activeTab, setActiveTab] = useState('home');
 
   const refreshData = useCallback(async () => {
@@ -139,13 +139,6 @@ const AppContent = () => {
             </>
         )}
 
-        {activeTab === 'stats' && (
-            <div className="flex flex-col items-center justify-center h-full text-slate-500">
-                <p>Global statistics coming soon.</p>
-                <p className="text-xs mt-2">Click a habit on Home to see individual stats.</p>
-            </div>
-        )}
-
         {activeTab === 'settings' && (
             <div className="p-4 space-y-6">
                 <h1 className="text-2xl font-bold text-white">Settings</h1>
@@ -157,7 +150,7 @@ const AppContent = () => {
                     <ul className="list-disc list-inside text-slate-400 text-sm space-y-1 mb-4">
                         <li>Offline-first IndexedDB architecture</li>
                         <li>Mobile-first Tailwind design</li>
-                        <li>Good/Bad habit tracking</li>
+                        <li>Helpful/Obstructive habit tracking</li>
                         <li>Detailed stats (click a habit card)</li>
                         <li>AI Analysis using Gemini</li>
                     </ul>
@@ -179,13 +172,6 @@ const AppContent = () => {
             >
                 <HomeIcon className="w-6 h-6" />
                 <span className="text-[10px] font-medium">Habits</span>
-            </button>
-            <button 
-                 onClick={() => setActiveTab('stats')}
-                 className={`flex flex-col items-center gap-1 ${activeTab === 'stats' ? 'text-indigo-400' : 'text-slate-500'}`}
-            >
-                <ChartIcon className="w-6 h-6" />
-                <span className="text-[10px] font-medium">Stats</span>
             </button>
             <button 
                  onClick={() => setActiveTab('settings')}

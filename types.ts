@@ -1,4 +1,4 @@
-export type HabitType = 'good' | 'bad';
+export type HabitType = 'helpful' | 'obstructive';
 
 export interface Habit {
   id: string;

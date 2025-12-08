@@ -11,7 +11,7 @@ interface NewHabitModalProps {
 export const NewHabitModal: React.FC<NewHabitModalProps> = ({ isOpen, onClose, onSave }) => {
   const [name, setName] = useState('');
   const [emoji, setEmoji] = useState(EMOJI_PRESETS[0]);
-  const [type, setType] = useState<HabitType>('good');
+  const [type, setType] = useState<HabitType>('helpful');
   const [color, setColor] = useState(COLORS[3]); // Emerald default
   const [unit, setUnit] = useState('');
 
@@ -51,14 +51,14 @@ export const NewHabitModal: React.FC<NewHabitModalProps> = ({ isOpen, onClose, o
                     <div className="flex bg-slate-800 rounded-lg p-1">
                         <button 
                             type="button"
-                            onClick={() => setType('good')}
-                            className={`flex-1 py-2 text-sm rounded-md transition-colors ${type === 'good' ? 'bg-emerald-600 text-white' : 'text-slate-400'}`}
-                        >Good</button>
+                            onClick={() => setType('helpful')}
+                            className={`flex-1 py-2 text-sm rounded-md transition-colors ${type === 'helpful' ? 'bg-emerald-600 text-white' : 'text-slate-400'}`}
+                        >Helpful</button>
                         <button 
                             type="button"
-                            onClick={() => setType('bad')}
-                            className={`flex-1 py-2 text-sm rounded-md transition-colors ${type === 'bad' ? 'bg-red-600 text-white' : 'text-slate-400'}`}
-                        >Bad</button>
+                            onClick={() => setType('obstructive')}
+                            className={`flex-1 py-2 text-sm rounded-md transition-colors ${type === 'obstructive' ? 'bg-red-600 text-white' : 'text-slate-400'}`}
+                        >Obstructive</button>
                     </div>
                 </div>
                 <div>

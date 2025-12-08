@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Habit, HabitLog } from '../types';
 import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { SparklesIcon } from './Icon';
+import { SparklesIcon, EllipsisVerticalIcon, TrashIcon } from './Icon';
 import { analyzeHabitData } from '../services/geminiService';
 
 interface HabitDetailProps {
@@ -14,6 +14,7 @@ interface HabitDetailProps {
 export const HabitDetail: React.FC<HabitDetailProps> = ({ habit, logs, onBack, onDelete }) => {
   const [analysis, setAnalysis] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
   // Group logs by day for the last 7 days
   const chartData = useMemo(() => {
@@ -51,18 +52,45 @@ export const HabitDetail: React.FC<HabitDetailProps> = ({ habit, logs, onBack, o
     setIsAnalyzing(false);
   };
 
-  const chartColor = habit.type === 'good' ? '#10b981' : '#ef4444'; // Emerald vs Red
+  const chartColor = habit.type === 'helpful' ? '#10b981' : '#ef4444'; // Emerald vs Red
 
   return (
-    <div className="flex flex-col h-full bg-slate-950 overflow-y-auto no-scrollbar pb-20">
+    <div className="flex flex-col h-full bg-slate-950 overflow-y-auto no-scrollbar pb-20 relative">
       <div className="p-4 border-b border-slate-800 flex items-center justify-between sticky top-0 bg-slate-950 z-20">
-        <button onClick={onBack} className="text-slate-400 hover:text-white px-2 py-1">
+        <button onClick={onBack} className="text-slate-400 hover:text-white px-2 py-1 flex items-center gap-1">
           &larr; Back
         </button>
         <h2 className="text-lg font-bold">{habit.emoji} {habit.name}</h2>
-        <button onClick={() => {
-            if(confirm('Delete this habit and all history?')) onDelete(habit.id);
-        }} className="text-red-500 text-sm">Delete</button>
+        
+        {/* Context Menu Trigger */}
+        <div className="relative">
+            <button 
+                onClick={() => setShowMenu(!showMenu)} 
+                className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-full transition-colors"
+                aria-label="Options"
+            >
+                <EllipsisVerticalIcon className="w-6 h-6" />
+            </button>
+
+            {/* Menu Dropdown */}
+            {showMenu && (
+                <>
+                    <div className="fixed inset-0 z-30" onClick={() => setShowMenu(false)}></div>
+                    <div className="absolute right-0 top-full mt-2 w-48 bg-slate-800 rounded-xl shadow-xl border border-slate-700 overflow-hidden z-40 origin-top-right animate-in fade-in zoom-in-95 duration-100">
+                         <button 
+                            onClick={() => {
+                                setShowMenu(false);
+                                if(confirm('Delete this habit and all history?')) onDelete(habit.id);
+                            }}
+                            className="w-full text-left px-4 py-3 text-red-400 hover:bg-slate-700 hover:text-red-300 flex items-center gap-3 transition-colors"
+                        >
+                            <TrashIcon className="w-5 h-5" />
+                            <span>Delete Habit</span>
+                        </button>
+                    </div>
+                </>
+            )}
+        </div>
       </div>
 
       <div className="p-6">

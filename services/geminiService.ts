@@ -18,13 +18,13 @@ export const analyzeHabitData = async (habit: Habit, logs: HabitLog[], periodDes
   const prompt = `
     Analyze the following habit data for a user.
     Habit: ${habit.name} (${habit.type}).
-    Goal: To ${habit.type === 'good' ? 'maintain or increase' : 'reduce or quit'} usage.
+    Goal: To ${habit.type === 'helpful' ? 'maintain or increase' : 'reduce or quit'} usage.
     Period: ${periodDescription}
     Data: ${JSON.stringify(logSummary)}
 
     Please provide a concise, 2-3 sentence insight or encouragement based on the trend.
-    If it's a bad habit and they are doing well (low/zero counts), congratulate them.
-    If usage is high for a bad habit, provide a gentle warning.
+    If it's an obstructive habit and they are doing well (low/zero counts), congratulate them.
+    If usage is high for an obstructive habit, provide a gentle warning.
     Do not use markdown formatting, just plain text with emojis.
   `;
 
