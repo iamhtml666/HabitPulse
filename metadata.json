@@ -1,0 +1,5 @@
+{
+  "name": "HabitPulse",
+  "description": "A privacy-focused, offline-first habit tracker that helps you understand your consumption and habits through detailed statistics and AI insights.",
+  "requestFramePermissions": []
+}
